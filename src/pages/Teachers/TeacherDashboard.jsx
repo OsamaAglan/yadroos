@@ -31,6 +31,11 @@ const Dashboard = () => {
   const [growthData, setGrowthData] = useState([]);
   const [groupLines, setGroupLines] = useState([]);
   const [loading, setLoading] = useState(true);
+  // Summary data derived from loaded growth data
+  const totalGroups = groupLines.length;
+  const totalStudents = growthData.length > 0 ? Object.entries(growthData[growthData.length - 1])
+    .filter(([key, value]) => key !== 'date')
+    .reduce((sum, [, value]) => sum + (value || 0), 0) : 0;
 
   // ✅ تحميل بيانات نمو المجموعات
   const loadGroupGrowth = useCallback(async () => {
@@ -118,7 +123,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-3 sm:p-5 md:p-6 space-y-4 sm:space-y-6 bg-blue-900 min-h-screen text-white rounded-2xl">
+    <div className="p-3 sm:p-5 md:p-6 space-y-6 sm:space-y-8 bg-blue-900 min-h-screen text-white rounded-2xl glass">
       {/* ✅ اللوجو والعنوان */}
       <div className="flex items-center gap-3">
         <BookOpen size={30} className="text-yellow-400 shrink-0" />
@@ -126,6 +131,34 @@ const Dashboard = () => {
           لوحة تحكم المعلم
         </h1>
       </div>
+
+      {/* ✅ ملخص إحصائيات سريعة */}
+      <Grid container spacing={2} className="mt-2">
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ bgcolor: "#1e3a8a", color: "#fff", borderRadius: 2 }} className="glass">
+            <CardContent>
+              <Typography variant="h6" sx={{ color: "#facc15", fontWeight: "bold" }}>
+                مجموعات
+              </Typography>
+              <Typography variant="h4" sx={{ mt: 1 }}>
+                {totalGroups}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <Card sx={{ bgcolor: "#1e3a8a", color: "#fff", borderRadius: 2 }} className="glass">
+            <CardContent>
+              <Typography variant="h6" sx={{ color: "#facc15", fontWeight: "bold" }}>
+                طلاب
+              </Typography>
+              <Typography variant="h4" sx={{ mt: 1 }}>
+                {totalStudents}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
       {/* ✅ روابط سريعة */}
       <Card sx={{ bgcolor: "#1e40af", color: "#fff", borderRadius: 3 }}>

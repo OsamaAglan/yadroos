@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom"; // أضف Navigate
+import { Routes, Route, Navigate } from "react-router-dom"; // Updated imports without Router
 
 import TeacherGroups from "../pages/Teachers/TeacherGroups";
 import Dashboard from "../pages/Teachers/TeacherDashboard";
@@ -35,7 +30,7 @@ import MainLayout from "../layout/MainLayout";
 
 const AppRouter = () => {
   return (
-    <Router>
+    <>
       <Routes>
         {/* توجيه تلقائي من الصفحة الرئيسية إلى /Login */}
 
@@ -214,7 +209,7 @@ element={
     <Route path="/forgot-password" element={<ChangePassword />} />
 
       </Routes>
-    </Router>
+    </>
   );
 };
 
